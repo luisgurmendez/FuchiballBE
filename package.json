@@ -31,6 +31,8 @@
       "typeorm": "0.2.20"
    },
    "scripts": {
+    "start:local:db": "pg_ctl -D /usr/local/var/postgres start",
+    "stop:local:db": "pg_ctl -D /usr/local/var/postgres stop",
       "start": "ts-node src/index.ts",
       "db:reset": "scripts/db_reset.sh",
       "db:seed": "ts-node src/db/seed.ts"
