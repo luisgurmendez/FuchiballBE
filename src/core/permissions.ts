@@ -1,6 +1,5 @@
 import { UserController } from "controller/UserController";
 
-
 export enum Permission {
   superadmin = 'superadmin',
   league = 'league',
@@ -8,17 +7,16 @@ export enum Permission {
   common = 'common'
 }
 
-function hasPermission(accessingTo: Permission, permission: Permission) {
-  const permissionToValue = {
+function hasPermission(accessingTo: Permission, permission: Permission): boolean {
+  const permissionToValue: { [key in Permission]: number } = {
     superadmin: 100,
     league: 90,
     division: 30,
-    player: 20
+    common: 20
   };
 
   return permissionToValue[permission] >= permissionToValue[accessingTo]
 }
-
 
 export const checkPerms = (accessingTo: Permission) => {
   return async (req, res, next) => {
@@ -34,7 +32,3 @@ export const checkPerms = (accessingTo: Permission) => {
     }
   };
 };
-
-
-
-

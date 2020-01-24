@@ -18,18 +18,24 @@ createConnection().then(async connection => {
   luis.permissions = Permission.league;
   luis.players = [];
 
-  await userRepository.save(luis);
+  const luisId = (await userRepository.save(luis)).id;
 
-  let trouville = new Team();
-  trouville.name = 'Trouvile FC';
-  trouville = await teamRepository.save(trouville);
+  const newLu = await userRepository.findOne(luisId);
+  newLu.delete();
+  await userRepository.save(newLu);
 
-  const luisTrouville = new Player();
-  luisTrouville.number = 3;
-  luisTrouville.team = trouville;
-  luisTrouville.user = luis;
+  // await userRepository.update(luisId, { isDeleted: true });
 
-  await playerRepository.save(luisTrouville);
+  // let trouville = new Team();
+  // trouville.name = 'Trouvile FC';
+  // trouville = await teamRepository.save(trouville);
+
+  // const luisTrouville = new Player();
+  // luisTrouville.number = 3;
+  // luisTrouville.team = trouville;
+  // luisTrouville.user = luis;
+
+  // await playerRepository.save(luisTrouville);
 
 }).catch(error => console.log(error));
 

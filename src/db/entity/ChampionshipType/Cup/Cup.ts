@@ -6,7 +6,6 @@ enum CupState {
   knockout = 'knockout'
 }
 
-
 @Entity()
 export class Cup {
 
