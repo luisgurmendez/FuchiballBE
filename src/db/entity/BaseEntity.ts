@@ -1,10 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, AfterUpdate, UpdateEvent, BeforeInsert, BeforeUpdate } from "typeorm";
 
-@Entity()
 export class BaseEntity {
-
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
 
   @Column('boolean', { default: false })
   isDeleted: boolean;

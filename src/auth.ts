@@ -103,7 +103,6 @@ export const checkToken = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-
 function getTokens(user: User) {
 
   let token = jwt.sign({ userId: user.id, username: user.username, permissions: user.permissions },
@@ -113,10 +112,8 @@ function getTokens(user: User) {
     }
   );
 
-
   return { token, refreshToken: user.username }
 }
-
 
 async function validateRefreshToken(refreshToken: string, username: string) {
   return refreshToken === username // LOGIC HERE

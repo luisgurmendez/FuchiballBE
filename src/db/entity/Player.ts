@@ -8,7 +8,7 @@ export class Player {
   @Column({ default: false })
   isTeamAdmin: boolean
 
-  @Column()
+  @Column({ nullable: true })
   number: number;
 
   @Column({ default: false })

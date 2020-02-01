@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable } from "typeorm";
-import { Cup } from "./Cup";
 import { Team } from "../../Team";
+import { PointBased } from "./PointBased";
 
 @Entity()
 export class Group {
@@ -11,11 +11,10 @@ export class Group {
   @Column()
   name: string;
 
-  // TODO: Add a relationship with teams ManyToMany??
   @ManyToMany(type => Team)
   @JoinTable()
   teams: Team[];
 
-  @ManyToOne(type => Cup, cup => cup.groups)
-  cup: Cup;
+  @ManyToOne(type => PointBased, pointbased => pointbased.groups)
+  pointBased: PointBased;
 }

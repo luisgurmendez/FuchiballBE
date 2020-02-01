@@ -1,4 +1,3 @@
-import { UserController } from "controller/UserController";
 
 export enum Permission {
   superadmin = 'superadmin',

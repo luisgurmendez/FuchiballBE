@@ -18,6 +18,9 @@ export class User extends BaseEntity {
     @Column()
     name: string;
 
+    @Column('text', { nullable: true })
+    img?: string;
+
     @Column({ type: 'enum', enum: Permission, default: Permission.common })
     permissions: Permission;
 

@@ -13,7 +13,7 @@ export class League {
   @Column()
   address: string;
 
-  @Column()
+  @Column('text', { default: 'plan 1' })
   plan?: string;
 
   @Column()

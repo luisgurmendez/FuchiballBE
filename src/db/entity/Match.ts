@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn, ManyToOne } from "typeorm";
 import { MatchEvent } from "./MatchEvent";
 import { Team } from "./Team";
 import { Referee } from "./Referee";
+import { Fixture } from "./Fixture";
 
 @Entity()
 export class Match {
@@ -29,4 +30,7 @@ export class Match {
 
   @OneToMany(type => MatchEvent, event => event.match)
   events: MatchEvent[];
+
+  @ManyToOne(type => Fixture, fixture => fixture.matches)
+  fixture: Fixture;
 }
