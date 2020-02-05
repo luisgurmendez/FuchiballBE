@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn, ManyToOne } from "typeorm";
 import { Match } from "./Match";
 import { Player } from "./Player";
 
@@ -19,11 +19,10 @@ export class MatchEvent {
   @Column({ type: 'enum', enum: Event })
   event: Event;
 
-  @OneToMany(type => Match, match => match.events)
+  @ManyToOne(type => Match, match => match.events)
   match: Match;
 
-  @OneToOne(type => Player)
-  @JoinColumn()
+  @ManyToOne(type => Player)
   player: Player;
 
   @Column('int')

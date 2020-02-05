@@ -36,6 +36,7 @@
       "stop:local:db": "pg_ctl -D /usr/local/var/postgres stop",
       "start": "ts-node src/index.ts",
       "db:reset": "scripts/db_reset.sh",
-      "db:seed": "ts-node src/db/seed/seed.ts"
+      "db:seed": "ts-node src/db/seed/seed.ts",
+      "db:export": "pg_dump -U luisgurmendez elcanchero > elcanchero.sql"
    }
 }

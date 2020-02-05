@@ -1,9 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Phase } from "../Phase";
 
 @Entity()
-export class Cup {
+export class Cup extends Phase {
 
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column('int')
+  size: number;
 
 }

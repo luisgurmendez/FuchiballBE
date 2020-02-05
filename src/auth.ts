@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Permission } from 'core/permissions';
 import { getRepository } from 'typeorm';
 import { User } from './db/entity/User';
+import { UserService } from './services/user';
 
 interface JWTDecodedPayload {
   userId: string;
@@ -14,12 +15,12 @@ export const handleAuth = async (req: Request, res: Response, next: NextFunction
   let username = req.body.username;
   let password = req.body.password;
 
-  const userRepository = getRepository(User);
-  const user = await userRepository.findOne({ select: ['username', 'password', 'id', 'permissions'], where: { username: username } });
+  const userService = new UserService();
 
   if (username && password) {
-    if (user !== undefined && username === user.username && password === user.password) {
-
+    const loginSuccess = await userService.login(username, password);
+    if (loginSuccess) {
+      const user = await userService.findByUsername(username);
       const tokens = getTokens(user)
 
       res.json({

@@ -2,11 +2,8 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import * as express from "express";
 import { jsonRequestFormat, timeLog } from './middlewares';
-import { User } from "./db/entity/User";
 import { handleAuth, handleRefreshToken } from './auth';
 import * as morgan from 'morgan';
-import { Player } from "./db/entity/Player";
-import { Team } from "./db/entity/Team";
 
 import userRoutes from './routes/user';
 
