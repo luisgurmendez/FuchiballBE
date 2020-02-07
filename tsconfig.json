@@ -11,7 +11,9 @@
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true,
-      "baseUrl": "src"
+      "baseUrl": "src",
+      "esModuleInterop": true,
+      "downlevelIteration": true
    },
    "include": [
       "src"

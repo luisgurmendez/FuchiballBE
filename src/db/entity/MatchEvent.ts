@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn
 import { Match } from "./Match";
 import { Player } from "./Player";
 
-enum Event {
+export enum Event {
   goal = 'goal',
   penaltyGoal = 'penalty_goal',
   penaltyMiss = 'penalty_miss',

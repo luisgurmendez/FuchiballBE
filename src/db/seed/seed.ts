@@ -48,7 +48,6 @@ createConnection().then(async connection => {
 
   const players: { team: string; userId: string; number: string }[] = JSON.parse(fs.readFileSync('src/db/seed/players.json', 'utf8'));
 
-
   setTimeout(async () => {
     players.forEach(async p => {
       const player = new Player();

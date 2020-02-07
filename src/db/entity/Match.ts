@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn, ManyToOne } from "typeorm";
-import { MatchEvent } from "./MatchEvent";
+import { MatchEvent, Event } from "./MatchEvent";
 import { Team } from "./Team";
 import { Referee } from "./Referee";
 import { Fixture } from "./Fixture";
@@ -10,17 +10,23 @@ export class Match {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  starts: string;
+  @Column({ type: 'timestamp' })
+  startsAt: Date;
 
   @Column()
   played: boolean;
 
-  @OneToOne(type => Team)
+  @Column({ nullable: true })
+  localGoals: number
+
+  @Column({ nullable: true })
+  visitantGoals: number
+
+  @ManyToOne(type => Team)
   @JoinColumn()
   local: Team;
 
-  @OneToOne(type => Team)
+  @ManyToOne(type => Team)
   @JoinColumn()
   visitant: Team;
 
@@ -33,4 +39,28 @@ export class Match {
 
   @ManyToOne(type => Fixture, fixture => fixture.matches)
   fixture: Fixture;
+
+  play() {
+    this.played = true;
+    const results = this.getResults();
+    this.localGoals = results.localGoals;
+    this.visitantGoals = results.visitantGoals;
+  };
+
+  getResults() {
+    let localGoals = 0;
+    let visitantGoals = 0;
+    this.events.forEach(event => {
+      if (event.event === Event.goal) {
+        if (event.player.team.id === this.local.id) {
+          localGoals++;
+        } else {
+          visitantGoals++;
+        }
+      }
+    })
+    return { localGoals, visitantGoals };
+  };
+
+
 }

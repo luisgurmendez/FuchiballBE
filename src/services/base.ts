@@ -34,5 +34,4 @@ export class BaseService<T extends BaseEntity> implements Service<T> {
     // @ts-ignore
     return await this.repository.save(removedEntity);
   }
-
 }
