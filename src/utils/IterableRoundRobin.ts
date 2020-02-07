@@ -25,11 +25,17 @@ export class IterableRoundRobin<E> implements Iterable<[E, E][]>{
   }
 
   next(): IteratorResult<[E, E][]> {
-    if (this.roundIteration < this.numOfRounds) {
+    const robin = this.double ? 2 : 1;
+    if (this.roundIteration < this.numOfRounds * robin) {
       const round: [E, E][] = [];
+      //TODO:separete in funcionts!
       for (let i = 0; i < this.topRow.length; i++) {
         if (this.topRow[i] && this.bottomRow[i]) {
-          round.push([this.topRow[i], this.bottomRow[i]])
+          if (this.roundIteration < this.numOfRounds) {
+            round.push([this.topRow[i], this.bottomRow[i]])
+          } else {
+            round.push([this.bottomRow[i], this.topRow[i]])
+          }
         }
       }
 
