@@ -9,7 +9,7 @@ router.get('/status', (req, res) => {
   res.json({ status: true });
 });
 
-router.get('/all', async (req, res, next) => {
+router.get('/all', checkPerms(Permission.superadmin), async (req, res, next) => {
   const users = await new UserService().all();
   res.json({
     status: true,
@@ -17,7 +17,7 @@ router.get('/all', async (req, res, next) => {
   });
 });
 
-router.get('/:userId', checkToken, async (req, res, next) => {
+router.get('/', checkToken, async (req, res, next) => {
   const user = await new UserService().one(req.body.userId)
   if (user) {
     res.json({
@@ -29,7 +29,7 @@ router.get('/:userId', checkToken, async (req, res, next) => {
   }
 })
 
-router.post('/delete', checkToken, checkPerms(Permission.superadmin), async (req, res, next) => {
+router.post('/delete', checkToken, checkPerms(Permission.division), async (req, res, next) => {
   const user = await new UserService().delete(req.body.userId)
   if (user) {
     res.json({

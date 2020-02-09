@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, OneToOne } from "typeorm";
 import { Team } from "../../Team";
 import { Playoffs } from "./Playoffs";
-import { Fixture } from "db/entity/Fixture";
+import { Fixture } from "../../Fixture";
 
 @Entity()
 export class PlayoffGroup {

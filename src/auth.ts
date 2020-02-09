@@ -2,9 +2,8 @@ import * as jwt from 'jsonwebtoken';
 import { jwtSecretKey } from './config';
 import { Request, Response, NextFunction } from 'express';
 import { Permission } from 'core/permissions';
-import { getRepository } from 'typeorm';
 import { User } from './db/entity/User';
-import { UserService } from './services/user';
+import { UserService } from './services/UserSerivce';
 
 interface JWTDecodedPayload {
   userId: string;

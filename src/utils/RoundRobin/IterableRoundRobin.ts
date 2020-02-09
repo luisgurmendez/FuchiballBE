@@ -1,5 +1,7 @@
 
-export class IterableRoundRobin<E> implements Iterable<[E, E][]>{
+
+type RoundMatch<E> = [E, E]
+export class IterableRoundRobin<E> implements Iterable<RoundMatch<E>[]>{
 
   private double: boolean;
   private topRow: E[];
@@ -24,22 +26,32 @@ export class IterableRoundRobin<E> implements Iterable<[E, E][]>{
     return this;
   }
 
+  private isByeEntity(entity: E) {
+    return entity === undefined
+  }
+
+  private addRoundMatchToRound(round: RoundMatch<E>[], roundIndex: number) {
+    if (
+      !this.isByeEntity(this.topRow[roundIndex]) &&
+      !this.isByeEntity(this.bottomRow[roundIndex])
+    ) {
+      if (this.roundIteration < this.numOfRounds) {
+        round.push([this.topRow[roundIndex], this.bottomRow[roundIndex]])
+      } else {
+        round.push([this.bottomRow[roundIndex], this.topRow[roundIndex]])
+      }
+    }
+  }
+
   next(): IteratorResult<[E, E][]> {
     const robin = this.double ? 2 : 1;
     if (this.roundIteration < this.numOfRounds * robin) {
       const round: [E, E][] = [];
-      //TODO:separete in funcionts!
+
       for (let i = 0; i < this.topRow.length; i++) {
-        if (this.topRow[i] && this.bottomRow[i]) {
-          if (this.roundIteration < this.numOfRounds) {
-            round.push([this.topRow[i], this.bottomRow[i]])
-          } else {
-            round.push([this.bottomRow[i], this.topRow[i]])
-          }
-        }
+        this.addRoundMatchToRound(round, i)
       }
 
-      this.roundIteration += 1;
       this.shift();
       return {
         done: false,
@@ -54,6 +66,7 @@ export class IterableRoundRobin<E> implements Iterable<[E, E][]>{
   }
 
   private shift() {
+    this.roundIteration += 1;
     const pivot = this.topRow[0];
     const lastTopElement = this.topRow.pop();
     const firstBottomElement = this.bottomRow.shift();

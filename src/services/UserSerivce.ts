@@ -1,5 +1,5 @@
 import { User } from "../db/entity/User";
-import { BaseService } from "./base";
+import { BaseService } from "./BaseService";
 
 export class UserService extends BaseService<User> {
 
