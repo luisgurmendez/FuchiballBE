@@ -2,7 +2,7 @@ import { Column } from "typeorm";
 
 export enum PhaseType {
   cup = 'cup',
-  playoff = 'playoff',
+  pointbased = 'pointbased',
 }
 
 export class Phase {

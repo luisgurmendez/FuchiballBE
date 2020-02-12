@@ -4,10 +4,10 @@ import { Fixture } from '../../db/entity/Fixture';
 import { IterableRoundRobin } from '../RoundRobin/IterableRoundRobin';
 import { DateUtil } from '../DateUtil/DateUtil';
 
-export class PlayoffUtil {
+export class PointBasedUtil {
 
   /**
-   * Creates a Fixture for a Playoff Phase
+   * Creates a Fixture for a PointBased Phase
    * @param roundDaysOnWeek The number of the day that matches are preferable. For instance: [3,6].
    * This will be on Wednesday and Saturdays. Number 0 is Sunday.
    * @param startOn The date of the first match

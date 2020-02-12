@@ -6,7 +6,7 @@ import { Team } from "./src/db/entity/Team";
 import { Permission } from "./src/core/permissions";
 import { League } from "./src/db/entity/League";
 import { Division } from "./src/db/entity/Division";
-import { PlayoffPhaseCreator } from './src/services/PhaseSerivce/PlayoffPhaseCreator';
+import { PointBasedPhaseCreator } from './src/services/PhaseSerivce/PointBasedPhaseCreator';
 
 
 createConnection().then(async connection => {
@@ -35,8 +35,8 @@ createConnection().then(async connection => {
   let teams = await teamRepository.find();
   console.log(teams)
   teams = teams.splice(0, 9)
-  const playoffphase = PlayoffPhaseCreator.createPlayoffPhase(teams, 'Groups 1', false, 3);
-  console.log(JSON.stringify(playoffphase));
+  const pointbasedphase = PointBasedPhaseCreator.createPointBasedPhase(teams, 'Groups 1', false, 3);
+  console.log(JSON.stringify(pointbasedphase));
 
 
 })

@@ -1,10 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, OneToOne } from "typeorm";
 import { Team } from "../../Team";
-import { Playoffs } from "./Playoffs";
+import { PointBased } from "./PointBased";
 import { Fixture } from "../../Fixture";
 
 @Entity()
-export class PlayoffGroup {
+export class PointBasedGroup {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,8 +19,8 @@ export class PlayoffGroup {
   @JoinTable()
   teams: Team[];
 
-  @ManyToOne(type => Playoffs, playoffs => playoffs.groups)
-  playoffs: Playoffs;
+  @ManyToOne(type => PointBased, pointbased => pointbased.groups)
+  pointBased: PointBased;
 
   @OneToOne(type => Fixture)
   fixture: Fixture;

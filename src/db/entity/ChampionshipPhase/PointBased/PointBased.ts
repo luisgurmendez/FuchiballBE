@@ -1,13 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, OneToMany } from "typeorm";
-import { PlayoffGroup } from "./PlayoffGroup";
+import { PointBasedGroup } from "./PointBasedGroup";
 import { Phase } from "../Phase";
 
 @Entity()
-export class Playoffs extends Phase {
+export class PointBased extends Phase {
 
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(type => PlayoffGroup, group => group.playoffs)
-  groups: PlayoffGroup[]
+  @OneToMany(type => PointBasedGroup, group => group.pointBased)
+  groups: PointBasedGroup[]
 }
