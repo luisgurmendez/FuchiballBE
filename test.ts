@@ -1,11 +1,12 @@
 import "reflect-metadata";
-import { createConnection, createQueryBuilder } from "typeorm";
+import { createConnection, createQueryBuilder, AdvancedConsoleLogger } from "typeorm";
 import { User } from "./src/db/entity/User";
 import { Player } from "./src/db/entity/Player";
 import { Team } from "./src/db/entity/Team";
 import { Permission } from "./src/core/permissions";
 import { League } from "./src/db/entity/League";
 import { Division } from "./src/db/entity/Division";
+import { PlayoffPhaseCreator } from './src/services/PhaseSerivce/PlayoffPhaseCreator';
 
 
 createConnection().then(async connection => {
@@ -31,17 +32,11 @@ createConnection().then(async connection => {
   // liffa.divisions = [divisionA];
   // liffa = await leagueRepository.save(liffa);
 
-  const teams = await teamRepository.find({ relations: ['division', 'players', 'players.user'] });
-  console.log(teams);
-  // console.log(teams[0].division);
-  // (teams[1].division as any).then(d => {
-  //   console.log(d)
-  // })
-
-  console.log(teams[0].players)
-  teams[0].players.forEach(p => {
-    console.log(p.user.name)
-  })
+  let teams = await teamRepository.find();
+  console.log(teams)
+  teams = teams.splice(0, 9)
+  const playoffphase = PlayoffPhaseCreator.createPlayoffPhase(teams, 'Groups 1', false, 3);
+  console.log(JSON.stringify(playoffphase));
 
 
 })

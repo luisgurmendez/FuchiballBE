@@ -4,6 +4,11 @@ import { Team } from "./Team";
 import { Referee } from "./Referee";
 import { Fixture } from "./Fixture";
 
+export interface MatchResults {
+  localGoals: number;
+  visitantGoals: number;
+};
+
 @Entity()
 export class Match {
 
@@ -40,27 +45,10 @@ export class Match {
   @ManyToOne(type => Fixture, fixture => fixture.matches)
   fixture: Fixture;
 
-  play() {
+  play(results: MatchResults) {
     this.played = true;
-    const results = this.getResults();
     this.localGoals = results.localGoals;
     this.visitantGoals = results.visitantGoals;
   };
-
-  getResults() {
-    let localGoals = 0;
-    let visitantGoals = 0;
-    this.events.forEach(event => {
-      if (event.event === Event.goal) {
-        if (event.player.team.id === this.local.id) {
-          localGoals++;
-        } else {
-          visitantGoals++;
-        }
-      }
-    })
-    return { localGoals, visitantGoals };
-  };
-
 
 }

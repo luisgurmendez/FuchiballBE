@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, UpdateDateColumn, ObjectType } from "typeorm";
+import { Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 export class BaseEntity {
 

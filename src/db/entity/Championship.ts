@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Phase } from "./ChampionshipPhase/Phase";
 
 @Entity()
 export class Championship {
@@ -12,7 +13,7 @@ export class Championship {
   @Column()
   active: boolean;
 
-  @Column()
-  type: string;
+  // @Column()
+  // phases: Phase[];
 
 }

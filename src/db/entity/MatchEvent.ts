@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn, ManyToOne, BeforeInsert } from "typeorm";
 import { Match } from "./Match";
 import { Player } from "./Player";
 
@@ -19,6 +19,9 @@ export class MatchEvent {
   @Column({ type: 'enum', enum: Event })
   event: Event;
 
+  @Column()
+  teamId: string;
+
   @ManyToOne(type => Match, match => match.events)
   match: Match;
 
@@ -27,5 +30,10 @@ export class MatchEvent {
 
   @Column('int')
   min?: number;
+
+  @BeforeInsert()
+  setTeamId() {
+    this.teamId = this.player.team.id;
+  }
 
 }

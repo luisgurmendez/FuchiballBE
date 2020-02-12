@@ -1,16 +1,19 @@
-// import { Phase } from "db/entity/ChampionshipPhase/Phase";
+import { Phase } from "../db/entity/ChampionshipPhase/Phase";
+import { Championship } from "db/entity/Championship";
 
-// class ChampionshipBuilder {
+class ChampionshipService {
 
-//   private phases: Phase[];
 
-//   constructor() {
-//     this.phases = [];
-//     this.phases
-//   }
+  static createChampionship(phases: Phase[], season: string): Championship {
 
-//   addPhase(phase: Phase){
-//     this.phases.push(phase);
-//   }
+    const championship = new Championship();
+    championship.season = season;
 
-// }
+    // championship.phases = [];
+    championship.active = true;
+
+
+    return championship;
+
+  }
+}

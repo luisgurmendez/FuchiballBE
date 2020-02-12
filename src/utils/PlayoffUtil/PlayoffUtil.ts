@@ -1,11 +1,10 @@
 import { Match } from '../../db/entity/Match';
-import moment from 'moment';
 import { Team } from '../../db/entity/Team';
 import { Fixture } from '../../db/entity/Fixture';
 import { IterableRoundRobin } from '../RoundRobin/IterableRoundRobin';
 import { DateUtil } from '../DateUtil/DateUtil';
 
-export class PlayoffUtils {
+export class PlayoffUtil {
 
   /**
    * Creates a Fixture for a Playoff Phase
@@ -40,6 +39,32 @@ export class PlayoffUtils {
     return fixture;
   }
 
+  /**
+   * Recursive helper function
+   * @param groups 
+   * @param array 
+   * @param n 
+   */
+  private static splitEntitiesInGroupsHelper<T>(groups: T[][], array: T[], n: number): T[][] {
+    if (n === 1) {
+      groups.push(array);
+      return groups;
+    }
+    const numOfItemsInGroup = Math.floor(array.length / n);
+    const nextGroup = array.splice(0, numOfItemsInGroup);
+    groups.push(nextGroup)
+    return this.splitEntitiesInGroupsHelper(groups, array, n - 1);
+  }
+
+  /**
+   * This is a helper function intended to create several groups based on an arroy of entities.
+   * 
+   * @param enitites An array of Enitites
+   * @param numOfGroups The number of groups we want to split the teams
+   */
+  static splitEntitiesInGroups<T>(entities: T[], numOfGroups: number) {
+    return this.splitEntitiesInGroupsHelper([], entities, numOfGroups);
+  }
 }
 
 

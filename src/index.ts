@@ -1,9 +1,9 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
-import * as express from "express";
+import express from "express";
 import { jsonRequestFormat, timeLog } from './middlewares';
 import { handleAuth, handleRefreshToken } from './auth';
-import * as morgan from 'morgan';
+import morgan from 'morgan';
 
 import userRoutes from './routes/user';
 
