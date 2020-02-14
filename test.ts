@@ -35,7 +35,7 @@ createConnection().then(async connection => {
   let teams = await teamRepository.find();
   console.log(teams)
   teams = teams.splice(0, 9)
-  const pointbasedphase = PointBasedPhaseCreator.createPointBasedPhase(teams, 'Groups 1', false, 3);
+  const pointbasedphase = PointBasedPhaseCreator.createPointBasedPhase(teams, false, 3);
   console.log(JSON.stringify(pointbasedphase));
 
 

@@ -1,4 +1,5 @@
-import { Column } from "typeorm";
+import { Column, ManyToOne } from "typeorm";
+import { Championship } from "../Championship";
 
 export enum PhaseType {
   cup = 'cup',
@@ -19,4 +20,6 @@ export class Phase {
   @Column({ type: 'enum', enum: PhaseType })
   type: PhaseType
 
+  @ManyToOne(type => Championship, championship => championship.phases)
+  championship: Championship;
 }

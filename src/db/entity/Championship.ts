@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Phase } from "./ChampionshipPhase/Phase";
 
 @Entity()
@@ -13,7 +13,7 @@ export class Championship {
   @Column()
   active: boolean;
 
-  // @Column()
-  // phases: Phase[];
+  @OneToMany(type => Phase, phase => phase.championship)
+  phases: Phase[];
 
 }
