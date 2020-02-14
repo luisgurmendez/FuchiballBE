@@ -6,11 +6,11 @@ export class GenericError extends Error {
   status?: number;
   log?: string;
 
-  constructor(message: string, err?: ErrorStub) {
-    super();
-    this.log = err?.log;
-    this.status = err?.status;
-    this.errorCode = err?.errorCode;
+  constructor(message: string, err: ErrorStub = {}) {
+    super(message);
+    this.log = err.log;
+    this.status = err.status;
+    this.errorCode = err.errorCode;
   }
 }
 

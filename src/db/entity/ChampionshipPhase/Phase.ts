@@ -6,6 +6,7 @@ export enum PhaseType {
   pointbased = 'pointbased',
 }
 
+
 export class Phase {
 
   @Column()
@@ -20,6 +21,6 @@ export class Phase {
   @Column({ type: 'enum', enum: PhaseType })
   type: PhaseType
 
-  @ManyToOne(type => Championship, championship => championship.phases)
-  championship: Championship;
+  // @ManyToOne(type => Championship, championship => championship.phases)
+  // championship: Championship;
 }

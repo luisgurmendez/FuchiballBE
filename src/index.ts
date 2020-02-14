@@ -6,7 +6,7 @@ import { handleAuth, handleRefreshToken } from './auth';
 import morgan from 'morgan';
 
 import userRoutes from './routes/user';
-import { errorHandling, GenericError } from "middlewares/error";
+import { errorHandling, GenericError } from "./middlewares/error";
 
 createConnection().then(async connection => {
 
@@ -27,7 +27,14 @@ createConnection().then(async connection => {
 
     app.get('/test-error', () => {
         throw new GenericError('This is an error', { status: 505, log: 'Tjis should be logged!' })
+    });
+
+    app.get('/aync-error', async (_, _2, next) => {
+        setTimeout(() => {
+            next(new GenericError('This is an error', { status: 505, log: 'Tjis should be logged!' }))
+        }, 2000)
     })
+
     app.post('/login', handleAuth);
     app.post('/refresh', handleRefreshToken);
 

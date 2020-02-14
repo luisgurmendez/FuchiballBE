@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { Phase } from "./ChampionshipPhase/Phase";
+// import { Phase } from "./ChampionshipPhase/Phase";
 
 @Entity()
 export class Championship {
@@ -13,7 +13,7 @@ export class Championship {
   @Column()
   active: boolean;
 
-  @OneToMany(type => Phase, phase => phase.championship)
-  phases: Phase[];
+  // @OneToMany(type => Phase, phase => phase.championship)
+  // phases: Phase[];
 
 }
