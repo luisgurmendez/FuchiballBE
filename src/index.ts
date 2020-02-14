@@ -6,6 +6,7 @@ import { handleAuth, handleRefreshToken } from './auth';
 import morgan from 'morgan';
 
 import userRoutes from './routes/user';
+import { errorHandling, GenericError } from "middlewares/error";
 
 createConnection().then(async connection => {
 
@@ -24,11 +25,16 @@ createConnection().then(async connection => {
     app.use(timeLog);
     app.use(morgan(jsonRequestFormat));
 
+    app.get('/test-error', () => {
+        throw new GenericError('This is an error', { status: 505, log: 'Tjis should be logged!' })
+    })
     app.post('/login', handleAuth);
     app.post('/refresh', handleRefreshToken);
 
-    app.use('/user', userRoutes)
+    app.use('/user', userRoutes);
 
+
+    app.use(errorHandling)
     app.listen(3001);
 
     console.log("Express server has started on port 3000. Open http://localhost:3001/users to see results");
