@@ -6,6 +6,12 @@ export enum Permission {
   common = 'common'
 }
 
+const invalidPermsResponse = {
+  status: false,
+  errorCode: 'INVALID_PERMS',
+  msg: 'User does not have sufficient permissions',
+};
+
 function hasPermission(accessingTo: Permission, permission: Permission): boolean {
   const permissionToValue: { [key in Permission]: number } = {
     superadmin: 100,
@@ -23,11 +29,7 @@ export const checkPerms = (accessingTo: Permission) => {
     if (hasPerms) {
       next();
     } else {
-      res.status(403).json({
-        status: false,
-        errorCode: 'INVALID_PERMS',
-        msg: 'User does not have sufficient permissions',
-      });
+      res.status(403).json(invalidPermsResponse);
     }
   };
 };

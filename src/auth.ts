@@ -5,11 +5,6 @@ import { Permission } from 'core/permissions';
 import { User } from './db/entity/User';
 import { UserService } from './services/UserSerivce';
 
-interface JWTDecodedPayload {
-  userId: string;
-  permissions: Permission;
-}
-
 export const handleAuth = async (req: Request, res: Response, next: NextFunction) => {
   let username = req.body.username;
   let password = req.body.password;
@@ -22,25 +17,12 @@ export const handleAuth = async (req: Request, res: Response, next: NextFunction
       const user = await userService.findByUsername(username);
       const tokens = getTokens(user)
 
-      res.json({
-        success: true,
-        message: 'Authentication successful!',
-        token: tokens.token,
-        refreshToken: tokens.refreshToken
-      });
+      res.json(authSuccessResponse(tokens));
     } else {
-      res.status(403).json({
-        success: false,
-        errorCode: 'AUTH_FAIL',
-        message: 'Incorrect username or password'
-      });
+      res.status(403).json(authFailResponse('Incorrect username or password'));
     }
   } else {
-    res.status(400).json({
-      success: false,
-      errorCode: 'AUTH_FAIL',
-      message: 'Authentication failed! Please check the request'
-    });
+    res.status(400).json(authFailResponse('Authentication failed! Please check the request'));
   }
 }
 
@@ -54,18 +36,9 @@ export const handleRefreshToken = async (req: Request, res: Response, next: Next
     const isRefreshTokenValid = await validateRefreshToken(refreshToken, payload.username);
     if (err instanceof jwt.TokenExpiredError && isRefreshTokenValid) {
       const newTokens = getTokens(payload);
-      res.json({
-        success: true,
-        message: 'Authentication successful!',
-        token: newTokens.token,
-        refreshToken: newTokens.refreshToken
-      });
+      res.json(authSuccessResponse(newTokens));
     } else {
-      return res.status(400).json({
-        success: false,
-        errorCode: 'BAD_REFRESH_TOKEN_REQUEST',
-        message: 'Something went wrong refreshing your tokens'
-      });
+      return res.status(400).json(badRefreshTokenResponse);
     }
   });
 }
@@ -74,20 +47,13 @@ export const checkToken = (req: Request, res: Response, next: NextFunction) => {
   let token: string = req.headers['x-access-token'] as string || req.headers['authorization'] as string;
 
   if (token) {
-
     if (token.startsWith('Bearer ')) {
-      // Remove Bearer from string
       token = token.slice(7, token.length);
     }
 
     jwt.verify(token, jwtSecretKey, (err, payload) => {
       if (err) {
-        return res.status(403).json({
-          success: false,
-          errorCode: 'INVALID_TOKEN',
-          message: 'Token is not valid'
-        });
-
+        return res.status(403).json(invalidTokenResponse);
       } else {
         res.locals.userId = (payload as JWTDecodedPayload).userId;
         res.locals.permissions = (payload as JWTDecodedPayload).permissions;
@@ -95,15 +61,12 @@ export const checkToken = (req: Request, res: Response, next: NextFunction) => {
       }
     });
   } else {
-    return res.status(404).json({
-      success: false,
-      errorCode: 'NO_TOKEN',
-      message: 'Auth token is not supplied'
-    });
+    return res.status(404).json(noTokenResponse);
   }
 };
 
-function getTokens(user: User) {
+
+function getTokens(user: User): Tokens {
 
   let token = jwt.sign({ userId: user.id, username: user.username, permissions: user.permissions },
     jwtSecretKey,
@@ -118,3 +81,44 @@ function getTokens(user: User) {
 async function validateRefreshToken(refreshToken: string, username: string) {
   return refreshToken === username // LOGIC HERE
 }
+
+interface JWTDecodedPayload {
+  userId: string;
+  permissions: Permission;
+}
+
+interface Tokens {
+  token: string;
+  refreshToken: string;
+};
+
+const authFailResponse = (message: string) => ({
+  success: false,
+  errorCode: 'AUTH_FAIL',
+  message: message
+})
+
+const authSuccessResponse = (tokens: Tokens) => ({
+  success: true,
+  message: 'Authentication successful!',
+  token: tokens.token,
+  refreshToken: tokens.refreshToken
+});
+
+const badRefreshTokenResponse = {
+  success: false,
+  errorCode: 'BAD_REFRESH_TOKEN_REQUEST',
+  message: 'Something went wrong refreshing your tokens'
+}
+
+const invalidTokenResponse = {
+  success: false,
+  errorCode: 'INVALID_TOKEN',
+  message: 'Token is not valid'
+};
+
+const noTokenResponse = {
+  success: false,
+  errorCode: 'NO_TOKEN',
+  message: 'Auth token is not supplied'
+};
