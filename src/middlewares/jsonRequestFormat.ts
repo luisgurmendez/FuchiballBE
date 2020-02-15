@@ -1,5 +1,4 @@
-
-export const jsonRequestFormat = (tokens, req, res) => {
+const jsonRequestFormat = (tokens, req, res) => {
   return JSON.stringify({
     event: 'api-request',
     level: 'INFO',
@@ -16,9 +15,4 @@ export const jsonRequestFormat = (tokens, req, res) => {
   });
 };
 
-export const timeLog = (req, res, next) => {
-  console.log('Time: ', Date.now());
-  console.log('Body: ', JSON.stringify(req.body))
-  console.log('Headers: ', JSON.stringify(req.headers))
-  next();
-};
+export default jsonRequestFormat;

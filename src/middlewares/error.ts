@@ -20,15 +20,23 @@ interface ErrorStub {
   log?: string;
 }
 
-export const errorHandling: ErrorRequestHandler = (err: GenericError, req, res, next) => {
-  const statusCode = err.status || 500;
-  const errorCode = err.errorCode || 'GENERIC_ERROR';
-  Logger.error(err.log)
+export const errorHandling: ErrorRequestHandler = (err: GenericError | Error, req, res, next) => {
+
+  let statusCode = 500;
+  let errorCode = 'ERROR';
+  let log = err.message;
+
+  if (err instanceof GenericError) {
+    statusCode = err.status || 500;
+    errorCode = err.errorCode || 'ERROR';
+    log = err.log || err.message;
+  }
+
+  Logger.error(log);
+
   res.status(statusCode).json({
     status: false,
     errorCode: errorCode,
     message: err.message
   })
 }
-
-

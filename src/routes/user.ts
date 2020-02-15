@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { checkToken } from "../auth";
+import { checkAuth } from '../middlewares/checkAuth';
 import { UserService } from '../services/UserSerivce';
 import { checkPerms, Permission } from '../core/permissions';
 
@@ -17,7 +17,7 @@ router.get('/all', async (req, res, next) => {
   });
 });
 
-router.get('/:userId', checkToken, async (req, res, next) => {
+router.get('/:userId', checkAuth, async (req, res, next) => {
   const user = await new UserService().one(req.body.userId)
   if (user) {
     res.json({
@@ -29,7 +29,7 @@ router.get('/:userId', checkToken, async (req, res, next) => {
   }
 })
 
-router.post('/delete', checkToken, checkPerms(Permission.superadmin), async (req, res, next) => {
+router.post('/delete', checkAuth, checkPerms(Permission.superadmin), async (req, res, next) => {
   const user = await new UserService().delete(req.body.userId)
   if (user) {
     res.json({

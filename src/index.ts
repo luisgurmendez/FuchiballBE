@@ -1,12 +1,12 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import express from "express";
-import { jsonRequestFormat, timeLog } from './middlewares';
-import { handleAuth, handleRefreshToken } from './auth';
 import morgan from 'morgan';
-
 import userRoutes from './routes/user';
+import authRoutes from './routes/auth';
 import { errorHandling, GenericError } from "./middlewares/error";
+import entryLogger from './middlewares/entryLogger';
+import jsonRequestFormat from './middlewares/jsonRequestFormat';
 
 createConnection().then(async connection => {
 
@@ -22,7 +22,7 @@ createConnection().then(async connection => {
         next();
     });
 
-    app.use(timeLog);
+    app.use(entryLogger);
     app.use(morgan(jsonRequestFormat));
 
     app.get('/test-error', () => {
@@ -35,9 +35,7 @@ createConnection().then(async connection => {
         }, 2000)
     })
 
-    app.post('/login', handleAuth);
-    app.post('/refresh', handleRefreshToken);
-
+    app.use(authRoutes);
     app.use('/user', userRoutes);
 
 
