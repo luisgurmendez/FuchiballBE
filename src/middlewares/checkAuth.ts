@@ -42,8 +42,7 @@ const checkAuthCore = (req: Request, res: Response, next: NextFunction) => {
   try {
     const payload = jwt.verify(token, jwtSecretKey);
     if (isJWTDecodedPayload(payload)) {
-      res.locals.userId = (payload as JWTDecodedPayload).userId;
-      res.locals.permissions = (payload as JWTDecodedPayload).permissions;
+      res.locals = { ...res.locals, ...payload }
       next();
     }
   } catch (err) {
@@ -51,5 +50,8 @@ const checkAuthCore = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-//TODO: FIX!
+/**
+ * A list of util middlewares that check weather an authentication is valid.
+ * Also adds the token payload to the request locals object.
+ */
 export const checkAuth = [authValidation(), validateAuth, parseTokenHeaders, checkAuthCore];
