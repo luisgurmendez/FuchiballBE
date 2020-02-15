@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
-import { jwtSecretKey } from './config';
-import { Permission } from 'core/permissions';
-import { UserService } from './services/UserSerivce';
+import { jwtSecretKey } from '../config';
+import { Permission } from './permissions';
+import { UserService } from '../services/UserSerivce';
 
 export interface JWTDecodedPayload {
   userId: string;

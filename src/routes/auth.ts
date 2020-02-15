@@ -1,12 +1,12 @@
 
 import { Router } from 'express';
 import { authSuccessResponse, authFailResponse, badRefreshTokenResponse } from '../utils/AuthUtil/responses';
-import { Auth } from '../Auth';
+import { Auth } from '../core/Auth';
+import { loginValidation, refreshValidation } from '../validations/auth';
+import { validate } from '../middlewares/validate';
 const router = Router();
 
-//todo if username && password;
-// TOOD: Validate params 
-router.post('/login', async (req, res, next) => {
+router.post('/login', loginValidation(), validate, async (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -19,7 +19,7 @@ router.post('/login', async (req, res, next) => {
 });
 
 
-router.post('/refresh', async (req, res, next) => {
+router.post('/refresh', refreshValidation(), validate, async (req, res, next) => {
   const token = req.body.token;
   const refreshToken = req.body.refreshToken;
 
@@ -29,10 +29,7 @@ router.post('/refresh', async (req, res, next) => {
   } else {
     return res.status(400).json(badRefreshTokenResponse);
   }
-
 })
 
 
 export default router;
-
-

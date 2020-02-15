@@ -1,4 +1,4 @@
-import { Tokens } from "Auth";
+import { Tokens } from "../../core/Auth";
 
 export const authFailResponse = (message: string) => ({
   success: false,

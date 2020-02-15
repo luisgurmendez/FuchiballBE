@@ -1,4 +1,4 @@
-import { JWTDecodedPayload } from '../../Auth';
+import { JWTDecodedPayload } from '../../core/Auth';
 
 export function isJWTDecodedPayload(payload: object | string): payload is JWTDecodedPayload {
   return typeof payload === 'object' &&

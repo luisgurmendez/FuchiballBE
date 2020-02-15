@@ -405,6 +405,13 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
+"@types/express-validator@^3.0.0":
+  version "3.0.0"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/express-validator/-/express-validator-3.0.0.tgz#e6f3cab842e5ae376a1cfa11295202ec380b68d1"
+  integrity sha1-5vPKuELlrjdqHPoRKVIC7DgLaNE=
+  dependencies:
+    express-validator "*"
+
 "@types/express@*", "@types/express@^4.17.2":
   version "4.17.2"
   resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/express/-/express-4.17.2.tgz#a0fb7a23d8855bac31bc01d5a58cadd9b2173e6c"
@@ -1657,6 +1664,14 @@ expect@^25.1.0:
     jest-matcher-utils "^25.1.0"
     jest-message-util "^25.1.0"
     jest-regex-util "^25.1.0"
+
+express-validator@*, express-validator@^6.4.0:
+  version "6.4.0"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/express-validator/-/express-validator-6.4.0.tgz#634f96b60d53112409e270c038ab818a36f56e47"
+  integrity sha1-Y0+Wtg1TESQJ4nDAOKuBijb1bkc=
+  dependencies:
+    lodash "^4.17.15"
+    validator "^12.1.0"
 
 express@^4.15.4:
   version "4.17.1"
@@ -5102,6 +5117,11 @@ validator@12.0.0:
   version "12.0.0"
   resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/validator/-/validator-12.0.0.tgz#fb33221f5320abe2422cda2f517dc3838064e813"
   integrity sha1-+zMiH1Mgq+JCLNovUX3Dg4Bk6BM=
+
+validator@^12.1.0:
+  version "12.2.0"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/validator/-/validator-12.2.0.tgz#660d47e96267033fd070096c3b1a6f2db4380a0a"
+  integrity sha1-Zg1H6WJnAz/QcAlsOxpvLbQ4Cgo=
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"
