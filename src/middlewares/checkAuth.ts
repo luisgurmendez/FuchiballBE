@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from "express";
 import { jwtSecretKey } from "../config";
-import { invalidTokenResponse, noTokenResponse } from "../utils/AuthUtil/responses";
+import { invalidTokenResponse, noTokenResponse } from "../responses/auth";
 import { isJWTDecodedPayload } from '../utils/AuthUtil/utils';
 import { header, oneOf, validationResult } from "express-validator"
 

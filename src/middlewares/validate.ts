@@ -6,11 +6,11 @@ export const validate = (req: Request, res: Response, next: NextFunction) => {
   if (errors.isEmpty()) {
     return next()
   }
-  const extractedErrors = errors.array().map(err => ({ [err.param]: err.msg }))
+  // const extractedErrors = errors.array().map(err => ({ [err.param]: err.msg }))
 
   return res.status(400).json({
     status: false,
-    errorCode: 'VALIDATION_ERROR',
-    message: extractedErrors,
+    errorCode: 'BAD_REQUEST',
+    message: 'Bad request',
   })
 }

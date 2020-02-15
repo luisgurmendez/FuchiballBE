@@ -9,12 +9,15 @@ router.get('/status', (req, res) => {
   res.json({ status: true });
 });
 
-router.get('/all/:userId', checkPerms(Permission.superadmin), async (req, res, next) => {
-
-});
-
-router.get('/all', checkAuth, async (req, res, next) => {
-
+router.get('/', checkAuth, async (req, res, next) => {
+  const { userId } = res.locals;
+  const players = await new UserService().getAllPlayersOfUser(userId);
+  res.json({
+    status: true,
+    data: {
+      players: players || []
+    }
+  })
 });
 
 router.get('/:playerId', checkAuth, async (req, res, next) => {

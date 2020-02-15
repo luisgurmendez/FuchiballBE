@@ -4,7 +4,7 @@ export interface Response<RData = {}> {
 }
 
 export interface ErrorResponse extends Response {
-  code: number;
+  code?: number;
   errorCode: string;
   message: string;
 }

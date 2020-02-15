@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { authSuccessResponse, authFailResponse, badRefreshTokenResponse } from '../utils/AuthUtil/responses';
+import { authSuccessResponse, authFailResponse, badRefreshTokenResponse } from "../responses/auth";
 import { Auth } from '../core/Auth';
 import { loginValidation, refreshValidation } from '../validations/auth';
 import { validate } from '../middlewares/validate';
@@ -18,7 +18,6 @@ router.post('/login', loginValidation(), validate, async (req, res, next) => {
   }
 });
 
-
 router.post('/refresh', refreshValidation(), validate, async (req, res, next) => {
   const token = req.body.token;
   const refreshToken = req.body.refreshToken;
@@ -30,6 +29,5 @@ router.post('/refresh', refreshValidation(), validate, async (req, res, next) =>
     return res.status(400).json(badRefreshTokenResponse);
   }
 })
-
 
 export default router;

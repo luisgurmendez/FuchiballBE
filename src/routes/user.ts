@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { checkAuth } from '../middlewares/checkAuth';
 import { UserService } from '../services/UserSerivce';
 import { checkPerms, Permission } from '../core/permissions';
+import { userNotFoundResponse } from '../responses/user';
 
 const router = Router();
 
@@ -17,15 +18,19 @@ router.get('/all', async (req, res, next) => {
   });
 });
 
-router.get('/:userId', checkAuth, async (req, res, next) => {
-  const user = await new UserService().one(req.body.userId)
-  if (user) {
+router.get('/', checkAuth, async (req, res, next) => {
+
+  const { userId } = res.locals;
+  try {
+    const user = await new UserService().one(userId)
     res.json({
       status: true,
       data: {
         user
       }
     })
+  } catch (e) {
+    res.status(404).json(userNotFoundResponse)
   }
 })
 

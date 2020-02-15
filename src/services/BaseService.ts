@@ -1,4 +1,4 @@
-import { getRepository, Repository, DeepPartial, ObjectType } from "typeorm";
+import { getRepository, Repository, DeepPartial, ObjectType, FindOneOptions } from "typeorm";
 import { BaseEntity } from "db/entity/BaseEntity";
 
 interface Service<E> {
@@ -20,7 +20,7 @@ export class BaseService<T extends BaseEntity> implements Service<T> {
     return this.repository.find({ where: { isDeleted: false } });
   }
 
-  async one(id: string) {
+  async one(id: string, options?: FindOneOptions<T>) {
     return this.repository.findOne(id);
   }
 

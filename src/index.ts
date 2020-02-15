@@ -4,7 +4,8 @@ import express from "express";
 import morgan from 'morgan';
 import userRoutes from './routes/user';
 import authRoutes from './routes/auth';
-import { errorHandling, GenericError } from "./middlewares/error";
+import playerRoutes from './routes/player';
+import { errorHandling } from "./middlewares/error";
 import entryLogger from './middlewares/entryLogger';
 import jsonRequestFormat from './middlewares/jsonRequestFormat';
 
@@ -25,18 +26,9 @@ createConnection().then(async connection => {
     app.use(entryLogger);
     app.use(morgan(jsonRequestFormat));
 
-    app.get('/test-error', () => {
-        throw new GenericError('This is an error', { status: 505, log: 'Tjis should be logged!' })
-    });
-
-    app.get('/aync-error', async (_, _2, next) => {
-        setTimeout(() => {
-            next(new GenericError('This is an error', { status: 505, log: 'Tjis should be logged!' }))
-        }, 2000)
-    })
-
     app.use(authRoutes);
     app.use('/user', userRoutes);
+    app.use('/player', playerRoutes);
 
 
     app.use(errorHandling)
