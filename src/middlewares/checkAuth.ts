@@ -1,7 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from "express";
 import { jwtSecretKey } from "../config";
-import { JWTDecodedPayload } from "../core/Auth";
 import { invalidTokenResponse, noTokenResponse } from "../utils/AuthUtil/responses";
 import { isJWTDecodedPayload } from '../utils/AuthUtil/utils';
 import { header, oneOf, validationResult } from "express-validator"
@@ -36,15 +35,13 @@ const parseTokenHeaders = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const checkAuthCore = (req: Request, res: Response, next: NextFunction) => {
-
   const token = req.body.token;
-
   try {
     const payload = jwt.verify(token, jwtSecretKey);
     if (isJWTDecodedPayload(payload)) {
       res.locals = { ...res.locals, ...payload }
-      next();
     }
+    return next();
   } catch (err) {
     return res.status(403).json(invalidTokenResponse);
   }
