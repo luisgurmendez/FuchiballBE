@@ -1,3 +1,3 @@
 import { entityNotFound } from "./utils";
 
-export const userNotFoundResponse = entityNotFound('User');
+export const userNotFoundResponse = entityNotFound("User");

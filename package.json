@@ -15,7 +15,14 @@
       "@types/lodash": "^4.14.149",
       "@types/morgan": "^1.7.37",
       "@types/node": "^13.7.0",
+      "@typescript-eslint/eslint-plugin": "^2.19.2",
+      "@typescript-eslint/parser": "^2.19.2",
+      "eslint": "^6.8.0",
+      "husky": "^4.2.3",
       "jest": "^25.1.0",
+      "lint-staged": "^10.0.7",
+      "mrm": "^2.0.4",
+      "prettier": "^1.19.1",
       "ts-jest": "^25.2.0",
       "ts-node": "3.3.0",
       "typescript": "3.3.3333"
@@ -47,6 +54,18 @@
       "coverage": "jest --coverage",
       "db:reset": "scripts/db_reset.sh",
       "db:seed": "ts-node src/db/seed/seed.ts",
-      "db:export": "pg_dump -U luisgurmendez elcanchero > elcanchero.sql"
+      "db:export": "pg_dump -U luisgurmendez elcanchero > elcanchero.sql",
+      "lint": "eslint"
+   },
+   "husky": {
+      "hooks": {
+         "pre-commit": "lint-staged"
+      }
+   },
+   "lint-staged": {
+      "*.{js,ts,css,md}": [
+         "eslint --fix",
+         "prettier --write"
+      ]
    }
 }

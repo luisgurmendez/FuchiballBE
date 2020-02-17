@@ -1,6 +1,6 @@
 export interface Response<RData = {}> {
   status: boolean;
-  data?: RData
+  data?: RData;
 }
 
 export interface ErrorResponse extends Response {

@@ -1,4 +1,10 @@
-import { getRepository, Repository, DeepPartial, ObjectType, FindOneOptions } from "typeorm";
+import {
+  getRepository,
+  Repository,
+  DeepPartial,
+  ObjectType,
+  FindOneOptions
+} from "typeorm";
 import { BaseEntity } from "db/entity/BaseEntity";
 
 interface Service<E> {
@@ -9,11 +15,10 @@ interface Service<E> {
 }
 
 export class BaseService<T extends BaseEntity> implements Service<T> {
-
   public repository: Repository<T>;
 
   constructor(entity: ObjectType<T>) {
-    this.repository = getRepository(entity)
+    this.repository = getRepository(entity);
   }
 
   async all() {
@@ -30,7 +35,7 @@ export class BaseService<T extends BaseEntity> implements Service<T> {
 
   async delete(id: string): Promise<T> {
     let removedEntity = await this.repository.findOne(id);
-    (removedEntity as unknown as BaseEntity).delete();
+    ((removedEntity as unknown) as BaseEntity).delete();
     // @ts-ignore
     return await this.repository.save(removedEntity);
   }

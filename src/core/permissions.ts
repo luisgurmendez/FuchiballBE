@@ -1,18 +1,20 @@
-
 export enum Permission {
-  superadmin = 'superadmin',
-  league = 'league',
-  division = 'division',
-  common = 'common'
+  superadmin = "superadmin",
+  league = "league",
+  division = "division",
+  common = "common"
 }
 
 const invalidPermsResponse = {
   status: false,
-  errorCode: 'INVALID_PERMS',
-  msg: 'User does not have sufficient permissions',
+  errorCode: "INVALID_PERMS",
+  msg: "User does not have sufficient permissions"
 };
 
-function hasPermission(accessingTo: Permission, permission: Permission): boolean {
+function hasPermission(
+  accessingTo: Permission,
+  permission: Permission
+): boolean {
   const permissionToValue: { [key in Permission]: number } = {
     superadmin: 100,
     league: 90,
@@ -20,7 +22,7 @@ function hasPermission(accessingTo: Permission, permission: Permission): boolean
     common: 20
   };
 
-  return permissionToValue[permission] >= permissionToValue[accessingTo]
+  return permissionToValue[permission] >= permissionToValue[accessingTo];
 }
 
 export const checkPerms = (accessingTo: Permission) => {

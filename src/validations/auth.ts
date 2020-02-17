@@ -1,15 +1,9 @@
-import { body } from "express-validator"
+import { body } from "express-validator";
 
 export const loginValidation = () => {
-  return [
-    body('username').exists(),
-    body('password').exists(),
-  ]
-}
+  return [body("username").exists(), body("password").exists()];
+};
 
 export const refreshValidation = () => {
-  return [
-    body('token').isJWT(),
-    body('refreshToken').exists(),
-  ]
-}
+  return [body("token").isJWT(), body("refreshToken").exists()];
+};

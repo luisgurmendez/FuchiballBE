@@ -1,5 +1,5 @@
 import { ErrorRequestHandler } from "express";
-import { Logger } from '../core/Logger';
+import { Logger } from "../core/Logger";
 
 export class GenericError extends Error {
   errorCode?: string;
@@ -20,15 +20,19 @@ interface ErrorStub {
   log?: string;
 }
 
-export const errorHandling: ErrorRequestHandler = (err: GenericError | Error, req, res, next) => {
-
+export const errorHandling: ErrorRequestHandler = (
+  err: GenericError | Error,
+  req,
+  res,
+  next
+) => {
   let statusCode = 500;
-  let errorCode = 'ERROR';
+  let errorCode = "ERROR";
   let log = err.message;
 
   if (err instanceof GenericError) {
     statusCode = err.status || 500;
-    errorCode = err.errorCode || 'ERROR';
+    errorCode = err.errorCode || "ERROR";
     log = err.log || err.message;
   }
 
@@ -38,5 +42,5 @@ export const errorHandling: ErrorRequestHandler = (err: GenericError | Error, re
     status: false,
     errorCode: errorCode,
     message: err.message
-  })
-}
+  });
+};
