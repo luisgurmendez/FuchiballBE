@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, Handler } from "express";
 import { validationResult } from "express-validator";
 
 export const validate = (req: Request, res: Response, next: NextFunction) => {
@@ -13,4 +13,8 @@ export const validate = (req: Request, res: Response, next: NextFunction) => {
     errorCode: "BAD_REQUEST",
     message: "Bad request"
   });
+};
+
+export const validateComposed = (validationMiddlewares: Handler[]) => {
+  return [...validationMiddlewares, validate];
 };
